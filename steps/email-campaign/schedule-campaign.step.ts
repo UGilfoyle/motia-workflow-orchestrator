@@ -15,12 +15,40 @@ export const config: ApiRouteConfig = {
             status: z.string(),
             recipientCount: z.number(),
             message: z.string()
+        }),
+        400: z.object({
+            status: z.string(),
+            message: z.string(),
+            errors: z.any()
         })
     }
 };
 
+const bodySchema = z.object({
+    campaignName: z.string(),
+    recipients: z.array(z.string().email()),
+    subject: z.string(),
+    template: z.string().optional().default('default'),
+    scheduledFor: z.string().optional()
+});
+
 export const handler: Handlers['ScheduleCampaign'] = async (input, { emit, logger, state }) => {
-    const { campaignName, recipients, subject, template, scheduledFor } = input.body;
+    // Validate request body manually since config validation is not working as expected
+    const validationResult = bodySchema.safeParse(input.body);
+
+    if (!validationResult.success) {
+        logger.warn('Invalid campaign schedule request', { errors: validationResult.error });
+        return {
+            status: 400,
+            body: {
+                status: 'error',
+                message: 'Invalid request body',
+                errors: validationResult.error.flatten()
+            }
+        };
+    }
+
+    const { campaignName, recipients, subject, template, scheduledFor } = validationResult.data;
     const campaignId = `campaign-${Date.now()}-${Math.random().toString(36).substring(7)}`;
 
     logger.info('Scheduling email campaign', {
