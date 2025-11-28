@@ -19,7 +19,8 @@ export const config: ApiRouteConfig = {
 };
 
 export const handler: Handlers['FetchData'] = async (input, { emit, logger, state }) => {
-    const { source, batchSize } = input.body;
+    const source = input.body.source as string || 'default-source';
+    const batchSize = Number(input.body.batchSize) || 10;
     const pipelineId = `pipeline-${Date.now()}-${Math.random().toString(36).substring(7)}`;
 
     logger.info('Starting data fetch pipeline', { pipelineId, source, batchSize });

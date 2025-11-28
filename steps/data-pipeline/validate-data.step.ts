@@ -101,7 +101,7 @@ export const handler: Handlers['ValidateData'] = async (input, { emit, logger, s
         });
     } else {
         // All records failed validation
-        await emit({
+        await (emit as any)({
             topic: 'data-validation-failed',
             data: {
                 pipelineId,

@@ -9,7 +9,8 @@ export const config: CronConfig = {
     flows: ['scheduled-tasks']
 };
 
-export const handler: Handlers['CleanupOldData'] = async (_, { emit, logger, state }) => {
+export const handler: Handlers['CleanupOldData'] = async (...args: any[]) => {
+    const [_, { emit, logger, state }] = args;
     logger.info('Starting cleanup job');
 
     const cleanupStartTime = Date.now();

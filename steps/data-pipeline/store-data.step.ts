@@ -73,7 +73,7 @@ export const handler: Handlers['StoreData'] = async (input, { emit, logger, stat
     });
 
     // Emit completion event
-    await emit({
+    await (emit as any)({
         topic: 'pipeline-completed',
         data: {
             pipelineId,

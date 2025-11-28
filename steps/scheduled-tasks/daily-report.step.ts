@@ -9,7 +9,8 @@ export const config: CronConfig = {
     flows: ['scheduled-tasks']
 };
 
-export const handler: Handlers['DailyReportGenerator'] = async (_, { emit, logger, state }) => {
+export const handler: Handlers['DailyReportGenerator'] = async (...args: any[]) => {
+    const [_, { emit, logger, state }] = args;
     logger.info('Starting daily report generation');
 
     const reportDate = new Date().toISOString().split('T')[0];

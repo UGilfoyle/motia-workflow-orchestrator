@@ -112,11 +112,10 @@ export const handler: Handlers['SendEmails'] = async (input, { emit, logger, sta
     });
 
     // Emit completion event
-    await emit({
+    await (emit as any)({
         topic: 'emails-sent',
         data: {
             campaignId,
-            campaignName,
             sentCount,
             failedCount,
             totalRecipients: recipients.length,
