@@ -1,0 +1,33 @@
+[
+  {
+    "id": "hello-world-flow",
+    "config": {
+      "steps/hello/process-greeting.step.ts": {
+        "x": 409,
+        "y": 44
+      },
+      "steps/hello/hello-api.step.ts": {
+        "x": 0,
+        "y": 0,
+        "sourceHandlePosition": "right"
+      }
+    }
+  },
+  {
+    "id": "scheduled-tasks",
+    "config": {
+      "steps/scheduled-tasks/health-check.step.ts": {
+        "x": 0,
+        "y": 0
+      },
+      "steps/scheduled-tasks/daily-report.step.ts": {
+        "x": 0,
+        "y": 220
+      },
+      "steps/scheduled-tasks/cleanup-job.step.ts": {
+        "x": 0,
+        "y": 440
+      }
+    }
+  }
+]
